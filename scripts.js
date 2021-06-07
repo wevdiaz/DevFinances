@@ -1,3 +1,15 @@
+const Modal = {
+    open() {
+        const modal = document.getElementsByClassName("modal-overlay");
+        modal[0].classList.add("active");
+    },
+
+    close(){
+        const modal = document.getElementsByClassName("modal-overlay");
+        modal[0].classList.remove("active");
+    }
+}
+
 const Transaction = {
 
     all: [
@@ -23,7 +35,7 @@ const Transaction = {
     
         {
             description: "Telefone",
-            amount: -3686,
+            amount: -1000,
             date: "07/06/2021"
         }
     ],
@@ -110,6 +122,17 @@ const DOM = {
 }
 
 const Utils = {
+
+    formatAmount(value) {
+        value = Number(value) * 100;
+        return value;
+    },
+
+    formatDate(date) {
+        const splittedDate = date.split("-");
+        return `${splittedDate[2]}/${splittedDate[1]}/${splittedDate[0]}`;
+    },
+
     formatCurrency(value) {
         const signal = Number(value) < 0 ? "-" : "";
 
@@ -138,8 +161,18 @@ const Form = {
         }
     },
 
-    formatData(){
-        console.log("Formatar os dados");
+    formatValues(){
+        let { description, amount, date} = this.getValues();
+
+        amount = Utils.formatAmount(amount);
+
+        date = Utils.formatDate(date);
+
+        return {
+            description,
+            amount,
+            date
+        }
     },
 
     validateField() {
@@ -150,12 +183,32 @@ const Form = {
         }
     },
 
+    saveTransaction(transaction) {
+        Transaction.add(transaction);
+    },
+
+    clearFields() {
+        this.description.value = "";
+        this.amount.value = "";
+        this.date.value = "";
+    },
+
     submit(event) {
         event.preventDefault();
 
         try {
             // Check the fields
             Form.validateField();
+
+            // formatting fields
+            const transaction = Form.formatValues();
+
+            Form.saveTransaction(transaction);
+
+            // Clear fields form
+            Form.clearFields();
+            
+            Modal.close();
 
         }catch(err) {
             alert(err.message);
