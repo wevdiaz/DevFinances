@@ -1,32 +1,41 @@
-const transactions = [
-    {
-        id: 1,
-        description: "Luz",
-        amount: -50001,
-        date: "06/06/2021"
-    },
-
-    {
-        id: 2,
-        description: "Website",
-        amount: 500000,
-        date: "06/06/2021"
-    },
-    {
-        id: 3,
-        description: "Água",
-        amount: -20000,
-        date: "06/06/2021"
-    }
-];
-
 const Transaction = {
 
-    all: transactions,
+    all: [
+        {
+            
+            description: "Luz",
+            amount: -50001,
+            date: "06/06/2021"
+        },
+    
+        {
+            
+            description: "Website",
+            amount: 500000,
+            date: "06/06/2021"
+        },
+        {
+            
+            description: "Água",
+            amount: -20000,
+            date: "06/06/2021"
+        },
+    
+        {
+            description: "Telefone",
+            amount: -3686,
+            date: "07/06/2021"
+        }
+    ],
 
     add(transaction) {
         Transaction.all.push(transaction);
 
+        App.reload();
+    },
+
+    remove(index) {
+        Transaction.all.splice(index, 1);
         App.reload();
     },
 
@@ -116,10 +125,48 @@ const Utils = {
     }
 }
 
+const Form = {
+    description: document.querySelector("input#description"),
+    amount: document.querySelector("input#amount"),
+    date: document.querySelector("input#date"),
+
+    getValues() {
+        return {
+            description: this.description.value,
+            amount: this.amount.value,
+            date: this.date.value
+        }
+    },
+
+    formatData(){
+        console.log("Formatar os dados");
+    },
+
+    validateField() {
+        const { description, amount, date } = this.getValues();
+
+        if ( description.trim() === "" || amount.trim() === "" ||  date.trim() === "") {
+            throw new Error("Por favor, preencha todos os campos");
+        }
+    },
+
+    submit(event) {
+        event.preventDefault();
+
+        try {
+            // Check the fields
+            Form.validateField();
+
+        }catch(err) {
+            alert(err.message);
+        }
+    }
+}
+
 
 const App = {
     init() {
-        transactions.forEach( transaction => DOM.addTransaction(transaction));
+        Transaction.all.forEach( transaction => DOM.addTransaction(transaction));
 
         DOM.updateBalance();
     },
@@ -132,10 +179,3 @@ const App = {
 
 App.init();
 
-
-Transaction.add({
-    id: 39,
-    description: "Gás",
-    amount: 84,
-    date: "07/06/2021"
-});
