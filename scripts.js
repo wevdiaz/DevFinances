@@ -26,6 +26,8 @@ const Transaction = {
 
     add(transaction) {
         Transaction.all.push(transaction);
+
+        App.reload();
     },
 
     incomes() {
@@ -91,6 +93,10 @@ const DOM = {
         document.getElementById("expenseDisplay").innerHTML = Utils.formatCurrency(Transaction.expenses());
 
         document.getElementById("totalDisplay").innerHTML = Utils.formatCurrency(Transaction.total());
+    },
+
+    clearTransactions() {
+        DOM.transactionsContainer.innerHTML = "";
     }
 }
 
@@ -111,6 +117,25 @@ const Utils = {
 }
 
 
-transactions.forEach( transaction => DOM.addTransaction(transaction));
+const App = {
+    init() {
+        transactions.forEach( transaction => DOM.addTransaction(transaction));
 
-DOM.updateBalance();
+        DOM.updateBalance();
+    },
+
+    reload() {
+        DOM.clearTransactions();
+        this.init();
+    }
+}
+
+App.init();
+
+
+Transaction.add({
+    id: 39,
+    description: "Gás",
+    amount: 84,
+    date: "07/06/2021"
+});
