@@ -18,7 +18,7 @@
       </a>      
   </p> 
 
- Projeto de uma aplicação com foco no Front-end, desenvolvida na Maratona Discovery da rocketseat, utilizando o básico do desenvolvimento web. Realizando um pequeno CRUDs para registrar edeletar, armazenando no próprio navegador, por meio do LocalStorage. Também trabalhamos com cálculos e formatação dos valores.
+ Projeto de uma aplicação com foco no Front-end, desenvolvida na Maratona Discovery da rocketseat, utilizando o básico do desenvolvimento web. Realizando um pequeno CRUDs para registrar edeletar, armazenando no próprio navegador, por meio do LocalStorage. Também trabalhamos com cálculos e formatação dos valores.[Veja Aqui](https://wevdiaz.github.io/DevFinances/)
 
 #### Tecnologias :hammer_and_wrench:
  
